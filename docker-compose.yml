@@ -2,7 +2,6 @@ services:
   overleaf:
     restart: always
     image: sharelatex/sharelatex:5.5.4
-    container_name: overleaf
     depends_on:
       mongo:
         condition: service_healthy
@@ -50,20 +49,34 @@ services:
   mongo:
     restart: always
     image: mongo:6.0
-    container_name: overleaf-mongo
     command: --replSet overleaf
     volumes:
       - ./data/mongo:/data/db
     healthcheck:
-      test: echo 'db.stats().ok' | mongosh localhost:27017/test --quiet
+      test: |
+        mongosh --quiet --eval '
+          try {
+            rs.status();
+            db.adminCommand({ping: 1});
+          } catch (err) {
+            rs.initiate({
+              _id: "overleaf",
+              members: [{ _id: 0, host: "mongo:27017" }]
+            });
+          }
+        '
       interval: 10s
       timeout: 10s
       retries: 5
+      start_period: 40s
 
   redis:
     restart: always
     image: redis:6.2
-    container_name: overleaf-redis
     command: redis-server --appendonly yes
     volumes:
       - ./data/redis:/data
+
+networks:
+  default:
+    driver: bridge
