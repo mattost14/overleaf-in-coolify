@@ -16,15 +16,33 @@ services:
       - "80"  # Expose port to other containers (Traefik can access)
     volumes:
       - ./data/sharelatex:/var/lib/overleaf
-    env_file:
-      - .env  # Optional: loads additional environment variables
     environment:
-      OVERLEAF_APP_NAME: Overleaf Community Edition
+      # Base Configuration
+      OVERLEAF_APP_NAME: ${OVERLEAF_APP_NAME:-Overleaf Community Edition}
+      OVERLEAF_SITE_URL: ${OVERLEAF_SITE_URL:-http://localhost}
+      OVERLEAF_NAV_TITLE: ${OVERLEAF_NAV_TITLE:-Overleaf}
+      OVERLEAF_ADMIN_EMAIL: ${OVERLEAF_ADMIN_EMAIL:-admin@example.com}
+      OVERLEAF_BEHIND_PROXY: ${OVERLEAF_BEHIND_PROXY:-false}
+      
+      # Database & Cache
       OVERLEAF_MONGO_URL: mongodb://mongo/sharelatex
       OVERLEAF_REDIS_HOST: redis
       OVERLEAF_REDIS_PORT: 6379
       REDIS_HOST: redis
       REDIS_PORT: 6379
+      
+      # Email Configuration (SMTP)
+      OVERLEAF_EMAIL_FROM_ADDRESS: ${OVERLEAF_EMAIL_FROM_ADDRESS:-}
+      OVERLEAF_EMAIL_SMTP_HOST: ${OVERLEAF_EMAIL_SMTP_HOST:-}
+      OVERLEAF_EMAIL_SMTP_PORT: ${OVERLEAF_EMAIL_SMTP_PORT:-587}
+      OVERLEAF_EMAIL_SMTP_SECURE: ${OVERLEAF_EMAIL_SMTP_SECURE:-false}
+      OVERLEAF_EMAIL_SMTP_USER: ${OVERLEAF_EMAIL_SMTP_USER:-}
+      OVERLEAF_EMAIL_SMTP_PASS: ${OVERLEAF_EMAIL_SMTP_PASS:-}
+      OVERLEAF_EMAIL_SMTP_LOGGER: ${OVERLEAF_EMAIL_SMTP_LOGGER:-false}
+      OVERLEAF_EMAIL_SMTP_NAME: ${OVERLEAF_EMAIL_SMTP_NAME:-}
+      EMAIL_CONFIRMATION_DISABLED: ${EMAIL_CONFIRMATION_DISABLED:-true}
+      
+      # Features
       ENABLED_LINKED_FILE_TYPES: 'project_file,project_output_file'
       ENABLE_CONVERSIONS: 'true'
     stop_grace_period: 60s
