@@ -1,37 +1,45 @@
-# Overleaf Toolkit
+# Overleaf for Coolify
 
-This repository contains the Overleaf Toolkit, the standard tools for running a local
-instance of [Overleaf](https://overleaf.com). This toolkit will help you to set up and administer both Overleaf Community Edition (free to use, and community supported), and Overleaf Server Pro (commercial, with professional support).
+Simplified Overleaf deployment without the toolkit - ready for Coolify!
 
-The [Developer wiki](https://github.com/overleaf/overleaf/wiki) contains further documentation on releases, features and other configuration elements.
+## Deployment Options in Coolify
 
+### Option A: Docker Compose (This Repo)
+1. Push this repo to your Git provider
+2. In Coolify: **New Resource** → **Docker Compose**
+3. Point to this repo
+4. Deploy!
 
-## Getting Started
+### Option B: Use Coolify's One-Click Overleaf Template
+Coolify may have a pre-built Overleaf template you can use directly.
 
-Clone this repository locally:
+## Environment Variables
 
-``` sh
-git clone https://github.com/overleaf/toolkit.git ./overleaf-toolkit
+Add these in Coolify's environment settings (optional):
+
+```bash
+SHARELATEX_SITE_URL=https://your-domain.com
+SHARELATEX_NAV_TITLE=Your Overleaf
+SHARELATEX_ADMIN_EMAIL=admin@yourdomain.com
+SHARELATEX_BEHIND_PROXY=true
 ```
 
-Then follow the [Quick Start Guide](./doc/quick-start-guide.md).
+## After Deployment
 
+1. Visit `http://your-server/launchpad`
+2. Create your admin account
+3. Login at `/login`
 
-## Documentation
+## Data Persistence
 
-See [Documentation Index](./doc/README.md)
+Ensure Coolify persists these volumes:
+- `./data/sharelatex` - Project files
+- `./data/mongo` - Database
+- `./data/redis` - Cache
 
+## Upgrading
 
-## Contributing
-
-See the [CONTRIBUTING](https://github.com/overleaf/overleaf/blob/main/CONTRIBUTING.md) file.
-
-
-## Getting Help
-
-Users of the free Community Edition should [open an issue on github](https://github.com/overleaf/toolkit/issues). 
-
-Users of Server Pro should contact `support@overleaf.com` for assistance.
-
-In both cases, it is a good idea to include the output of the `bin/doctor` script in your message.
-
+Change the image tag in `docker-compose.yml`:
+```yaml
+image: sharelatex/sharelatex:5.6.0  # Update version
+```
