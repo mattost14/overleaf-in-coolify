@@ -31,9 +31,9 @@ SHARELATEX_BEHIND_PROXY=true
 2. Create your admin account
 3. Login at `/login`
 
-### 2. Install Full TeX Live (One-Time Setup) ⚠️ REQUIRED
+### 2. Install Full TeX Live (Required for Advanced Templates) ⚠️
 
-**To enable ALL LaTeX packages** (NASA templates, IEEE, ACM, etc.), run this **once** in your Overleaf container terminal:
+**To enable ALL LaTeX packages** (NASA templates, IEEE, ACM, etc.), run this in your Overleaf container terminal:
 
 ```bash
 tlmgr update --self && tlmgr install scheme-full
@@ -42,7 +42,8 @@ tlmgr update --self && tlmgr install scheme-full
 **What this does:**
 - Downloads ~7GB of LaTeX packages (takes 10-20 minutes)
 - Fixes "package not found" errors for all templates
-- **Only needed once** - packages persist in `./data/texlive/` across redeployments
+
+**Note:** Packages are installed inside the container. If you redeploy, you'll need to run this again. To avoid this, consider creating a custom Docker image with TeX Live pre-installed.
 
 **Without this step**, many LaTeX templates won't compile!
 
@@ -52,7 +53,6 @@ Ensure Coolify persists these volumes:
 - `./data/sharelatex` - Project files and user data
 - `./data/mongo` - MongoDB database
 - `./data/redis` - Redis cache
-- `./data/texlive` - LaTeX packages (after running tlmgr install)
 
 ## Upgrading
 

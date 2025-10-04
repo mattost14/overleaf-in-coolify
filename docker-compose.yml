@@ -15,7 +15,6 @@ services:
       - "80"  # Expose port to other containers (Traefik can access)
     volumes:
       - ./data/sharelatex:/var/lib/overleaf
-      - ./data/texlive:/usr/local/texlive
     environment:
       # Base Configuration
       OVERLEAF_APP_NAME: ${OVERLEAF_APP_NAME:-Overleaf Community Edition}
@@ -51,9 +50,6 @@ services:
       # Custom Templates
       OVERLEAF_NEW_PROJECT_TEMPLATE_LINKS: ${OVERLEAF_NEW_PROJECT_TEMPLATE_LINKS}
       OVERLEAF_TEMPLATES_USER_ID: ${OVERLEAF_TEMPLATES_USER_ID}
-      
-      # TeX Live - Use full TeX Live installation
-      TEX_LIVE_DOCKER_IMAGE: ${TEX_LIVE_DOCKER_IMAGE:-quay.io/sharelatex/texlive-full:2023.1}
     stop_grace_period: 60s
 
   mongo:
