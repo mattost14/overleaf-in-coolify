@@ -1,8 +1,8 @@
 services:
-  sharelatex:
+  overleaf:
     restart: always
     image: sharelatex/sharelatex:5.5.4
-    container_name: sharelatex-overleaf
+    container_name: overleaf
     depends_on:
       mongo:
         condition: service_healthy
@@ -50,7 +50,7 @@ services:
   mongo:
     restart: always
     image: mongo:6.0
-    container_name: mongo-overleaf
+    container_name: overleaf-mongo
     command: --replSet overleaf
     volumes:
       - ./data/mongo:/data/db
@@ -63,7 +63,7 @@ services:
   redis:
     restart: always
     image: redis:6.2
-    container_name: redis-overleaf
+    container_name: overleaf-redis
     command: redis-server --appendonly yes
     volumes:
       - ./data/redis:/data
