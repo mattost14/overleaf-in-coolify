@@ -8,8 +8,12 @@ services:
         condition: service_healthy
       redis:
         condition: service_started
-    ports:
-      - "80:80"
+    # Port mapping - comment out when deploying to Coolify/Traefik
+    # For local development, uncomment the line below:
+    # ports:
+    #   - "80:80"
+    expose:
+      - "80"  # Expose port to other containers (Traefik can access)
     volumes:
       - ./data/sharelatex:/var/lib/overleaf
     env_file:
