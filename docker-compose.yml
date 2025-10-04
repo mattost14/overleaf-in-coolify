@@ -15,6 +15,8 @@ services:
       - "80"  # Expose port to other containers (Traefik can access)
     volumes:
       - ./data/sharelatex:/var/lib/overleaf
+      - ./data/texlive:/usr/local/texlive
+      - ./install-texlive-packages.sh:/etc/my_init.d/950_install_texlive_packages.sh:ro
     environment:
       # Base Configuration
       OVERLEAF_APP_NAME: ${OVERLEAF_APP_NAME:-Overleaf Community Edition}
