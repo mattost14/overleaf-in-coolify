@@ -40,18 +40,11 @@ The Community Edition ships with minimal LaTeX packages. Choose one option:
 Covers 95% of use cases including NASA, IEEE, ACM templates. **~1-2GB, 5-10 minutes**
 
 ```bash
-# Copy script to container (in Coolify terminal)
-curl -o /tmp/install.sh https://raw.githubusercontent.com/mattost14/overleaf-in-coolify/master/install-essential-texlive.sh
-bash /tmp/install.sh
+# In Coolify Overleaf container terminal, run:
+bash /install-essential-texlive.sh
 ```
 
-Or manually:
-```bash
-tlmgr update --self
-tlmgr install collection-latex collection-latexrecommended collection-latexextra \
-  collection-fontsrecommended collection-bibtexextra collection-pictures \
-  collection-mathscience biber
-```
+That's it! The script handles everything automatically.
 
 #### Option B: Full Installation (Everything)
 
