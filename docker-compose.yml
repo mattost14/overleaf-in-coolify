@@ -51,6 +51,12 @@ services:
       OVERLEAF_NEW_PROJECT_TEMPLATE_LINKS: ${OVERLEAF_NEW_PROJECT_TEMPLATE_LINKS}
       OVERLEAF_TEMPLATES_USER_ID: ${OVERLEAF_TEMPLATES_USER_ID}
     stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
 
   mongo:
     restart: always
