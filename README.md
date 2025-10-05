@@ -41,10 +41,16 @@ Covers 95% of use cases including NASA, IEEE, ACM templates. **~1-2GB, 5-10 minu
 
 ```bash
 # In Coolify Overleaf container terminal, run:
-bash /install-essential-texlive.sh
-```
+tlmgr update --self
 
-That's it! The script handles everything automatically.
+tlmgr install \
+  collection-latex collection-latexrecommended collection-latexextra \
+  collection-fontsrecommended collection-bibtexextra collection-pictures \
+  collection-mathscience biber \
+  glossaries glossaries-extra titlesec titletoc mcode \
+  tocloft vhistory wallpaper lettrine \
+  cleveref csquotes alphalph arrayjobx multido
+```
 
 #### Option B: Full Installation (Everything)
 
