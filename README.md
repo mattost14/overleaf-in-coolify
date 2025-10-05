@@ -31,21 +31,46 @@ SHARELATEX_BEHIND_PROXY=true
 2. Create your admin account
 3. Login at `/login`
 
-### 2. Install Full TeX Live (Required for Advanced Templates) ⚠️
+### 2. Install TeX Live Packages (Required for Advanced Templates) ⚠️
 
-**To enable ALL LaTeX packages** (NASA templates, IEEE, ACM, etc.), run this in your Overleaf container terminal:
+The Community Edition ships with minimal LaTeX packages. Choose one option:
+
+#### Option A: Essential Packages (Recommended) ⭐
+
+Covers 95% of use cases including NASA, IEEE, ACM templates. **~1-2GB, 5-10 minutes**
+
+```bash
+# Copy script to container (in Coolify terminal)
+curl -o /tmp/install.sh https://raw.githubusercontent.com/mattost14/overleaf-in-coolify/master/install-essential-texlive.sh
+bash /tmp/install.sh
+```
+
+Or manually:
+```bash
+tlmgr update --self
+tlmgr install collection-latex collection-latexrecommended collection-latexextra \
+  collection-fontsrecommended collection-bibtexextra collection-pictures \
+  collection-mathscience biber
+```
+
+#### Option B: Full Installation (Everything)
+
+Install ALL LaTeX packages. **~7GB, 10-20 minutes**
 
 ```bash
 tlmgr update --self && tlmgr install scheme-full
 ```
 
-**What this does:**
-- Downloads ~7GB of LaTeX packages (takes 10-20 minutes)
-- Fixes "package not found" errors for all templates
+#### What Gets Installed:
+
+**Essential packages include:**
+- NASA, IEEE, ACM, AIAA templates
+- Common document classes (article, book, beamer)
+- Bibliography tools (biblatex, biber)
+- Math and graphics packages
+- Most fonts
 
 **Note:** Packages are installed inside the container. If you redeploy, you'll need to run this again. To avoid this, consider creating a custom Docker image with TeX Live pre-installed.
-
-**Without this step**, many LaTeX templates won't compile!
 
 ## Data Persistence
 
